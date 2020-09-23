@@ -1,0 +1,124 @@
+@font-face {
+  font-family: 'Rubik';
+  src: url(../fonts/Rubik.ttf);
+}
+
+* {
+  box-sizing: border-box;
+  font-family: Rubik, Helvetica, Arial, sans-serif;
+}
+
+/* Login */
+.login {
+  background-color: #f6f6f6;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-c {
+  width: 500px;
+  height: 100%;
+  background: #ffffff;
+  box-shadow: 0px 20px 20px rgba(126, 152, 223, 0.05);
+  border-radius: 30px;
+  padding: 30px 50px;
+}
+
+.login-c h1 {
+  font-size: 22px;
+  line-height: 26px;
+  text-align: center;
+  letter-spacing: -0.165px;
+  color: #7e98df;
+  margin-bottom: 30px;
+}
+
+.welcome {
+  font-size: 14px;
+  line-height: 17px;
+  color: #232323;
+}
+
+#input-group-1,
+#input-group-2 {
+  font-size: 14px;
+  line-height: 17px;
+  color: #848484;
+  opacity: 0.75;
+  margin: 30px auto;
+}
+
+#input-1,
+#input-2 {
+  border: none;
+  border-bottom: 1px solid #232323;
+  border-radius: 0px;
+}
+
+.forgot {
+  font-size: 16px;
+  line-height: 19px;
+  text-align: right;
+  color: #7e98df;
+  margin: 30px auto;
+}
+
+.login-btn {
+  width: 100%;
+  height: 60px;
+  background: #7e98df;
+  border-radius: 70px;
+}
+
+.login-btn:hover {
+  background: #6987da;
+}
+
+.login-btn:active,
+.login-btn:focus {
+  background: #5277db !important;
+}
+
+.alt-login {
+  font-size: 16px;
+  line-height: 19px;
+  text-align: center;
+  color: #848484;
+  margin: 30px auto;
+}
+
+.google-btn {
+  width: 100%;
+  height: 60px;
+  background: #ffffff;
+  border: 1px solid #7e98df;
+  border-radius: 70px;
+  color: #7e98df;
+}
+
+.google-btn:hover {
+  background: #ffffffc0;
+  color: #7e98df;
+  border: 1px solid #6285e6;
+}
+
+.google-btn:active,
+.google-btn:focus {
+  background: #ffffffb0 !important;
+  color: #7e98df !important;
+  border: 1px solid #5881f3 !important;
+}
+
+.sign-up {
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #313131;
+  margin: 30px auto;
+}
+
+.sign-up span {
+  color: #7e98df;
+}
