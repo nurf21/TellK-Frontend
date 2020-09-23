@@ -15,18 +15,18 @@
           ></b-form-input>
         </b-form-group>
 
-        <b-form-group id="input-group-2" label="Email" label-for="input-1">
+        <b-form-group id="input-group-2" label="Email" label-for="input-2">
           <b-form-input
-            id="input-1"
+            id="input-2"
             type="email"
             required
             placeholder="Enter email"
           ></b-form-input>
         </b-form-group>
 
-        <b-form-group id="input-group-3" label="Password" label-for="input-2">
+        <b-form-group id="input-group-3" label="Password" label-for="input-3">
           <b-form-input
-            id="input-2"
+            id="input-3"
             type="password"
             required
             placeholder="Enter password"
