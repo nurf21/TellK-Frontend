@@ -21,15 +21,21 @@
             placeholder="Enter email"
           ></b-form-input>
         </b-form-group>
-        <b-button type="submit" class="login-btn">Send</b-button>
+        <b-button type="submit" class="login-btn" v-b-modal.soon>Send</b-button>
       </b-form>
+      <Soon />
     </b-container>
   </div>
 </template>
 
 <script>
+import Soon from '../components/Soon'
+
 export default {
-  name: 'Forgot'
+  name: 'Forgot',
+  components: {
+    Soon
+  }
 }
 </script>
 
