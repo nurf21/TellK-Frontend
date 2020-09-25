@@ -22,12 +22,17 @@
           ></b-form-input>
         </b-form-group>
 
-        <p class="forgot">Forgot password?</p>
+        <router-link to="/forgot">
+          <p class="forgot">Forgot password?</p>
+        </router-link>
 
         <b-button type="submit" class="login-btn">Login</b-button>
         <p class="alt-login">Login with</p>
         <b-button class="google-btn">Google</b-button>
-        <p class="sign-up">Don't have an account? <span>Sign Up</span></p>
+        <p class="sign-up">
+          Don't have an account?
+          <router-link to="/register"><span>Sign Up</span></router-link>
+        </p>
       </b-form>
     </b-container>
   </div>

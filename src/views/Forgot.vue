@@ -2,7 +2,11 @@
   <div class="login">
     <b-container class="login-c">
       <b-row>
-        <b-col cols="1"><h1>&lt;</h1></b-col>
+        <b-col cols="1">
+          <router-link to="/">
+            <h1>&lt;</h1>
+          </router-link>
+        </b-col>
         <b-col cols="11" style="padding-right: 50px">
           <h1>Forgot Password</h1>
         </b-col>
