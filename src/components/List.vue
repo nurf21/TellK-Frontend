@@ -3,8 +3,10 @@
     <b-row class="list-header">
       <b-col cols="10"><p>TellK</p></b-col>
       <b-col cols="2">
-        <img src="@/assets/icon/Menu.png" alt="toggle-menu" />
+        <img src="@/assets/icon/Menu.png" id="pop-burger" alt="toggle-menu" />
       </b-col>
+      <Pop />
+      <Side />
     </b-row>
     <b-row class="list-options">
       <b-col cols="10">
@@ -51,8 +53,15 @@
 </template>
 
 <script>
+import Pop from '../components/Pop'
+import Side from '../components/Side'
+
 export default {
   name: 'List',
+  components: {
+    Pop,
+    Side
+  },
   data() {
     return {
       rooms: [

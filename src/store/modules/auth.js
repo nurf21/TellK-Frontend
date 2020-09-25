@@ -11,6 +11,9 @@ export default {
       state.user = payload
       state.token = payload.token
     },
+    setUserLogin(state, payload) {
+      state.user = payload
+    },
     delUser(state) {
       state.user = {}
       state.token = null
@@ -22,6 +25,7 @@ export default {
         axios
           .post(`${process.env.VUE_APP_BASE_URL}/user/login`, payload)
           .then(response => {
+            delete response.data.data.user_password
             context.commit('setUser', response.data.data)
             localStorage.setItem('token', response.data.data.token)
             resolve(response.data)
@@ -42,6 +46,19 @@ export default {
         axios
           .post(`${process.env.VUE_APP_BASE_URL}/user/register`, payload)
           .then(response => {
+            resolve(response.data)
+          })
+          .catch(error => {
+            reject(error.response)
+          })
+      })
+    },
+    getUserById(context, payload) {
+      return new Promise((resolve, reject) => {
+        axios
+          .get(`${process.env.VUE_APP_BASE_URL}/user/${payload}`)
+          .then(response => {
+            context.commit('setUserLogin', response.data.data[0])
             resolve(response.data)
           })
           .catch(error => {
@@ -90,6 +107,9 @@ export default {
   getters: {
     isLogin(state) {
       return state.token !== null
+    },
+    getUserData(state) {
+      return state.user
     }
   }
 }
