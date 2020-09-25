@@ -1,5 +1,5 @@
 <template>
-  <b-sidebar id="sidebar-profle" shadow width="454px">
+  <b-sidebar id="sidebar-profle" shadow backdrop width="454px">
     <b-container>
       <div class="side-profile-header">
         <b-img :src="url + '/' + user.user_image"></b-img>
@@ -41,7 +41,7 @@
           <b-col cols="1">
             <b-img :src="require('../assets/icon/logout.png')" />
           </b-col>
-          <b-col cols="11"><p>Logout</p></b-col>
+          <b-col cols="11" @click="handleLogout()"><p>Logout</p></b-col>
         </b-row>
       </div>
     </b-container>
@@ -92,11 +92,17 @@ export default {
     return {
       url: process.env.VUE_APP_BASE_URL,
       formImage: {},
-      formProfile: {}
+      formProfile: {},
+      isLogout: false
     }
   },
   methods: {
-    ...mapActions(['patchUserImage', 'patchUserProfile', 'getUserById']),
+    ...mapActions([
+      'patchUserImage',
+      'patchUserProfile',
+      'getUserById',
+      'logout'
+    ]),
     upFile(event) {
       this.formImage.user_image = event.target.files[0]
       const data = new FormData()
@@ -144,6 +150,22 @@ export default {
         variant: variant,
         solid: true
       })
+    },
+    handleLogout() {
+      this.$bvModal
+        .msgBoxConfirm('Are you sure want to logout?', {
+          cancelVariant: 'danger',
+          okVariant: 'success',
+          headerClass: 'p-2 border-bottom-0',
+          footerClass: 'p-2 border-top-0',
+          centered: true
+        })
+        .then(value => {
+          this.isLogout = value
+          if (this.isLogout) {
+            this.logout()
+          }
+        })
     }
   },
   computed: {
