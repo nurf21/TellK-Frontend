@@ -7,15 +7,13 @@
     width="454px"
   >
     <b-container class="contact-c">
-      <b-row
-        class="list-options"
-        style="margin-top: 30px"
-        v-if="contact.length !== 0"
-      >
+      <b-row class="list-options" style="margin-top: 30px">
         <b-col cols="12">
           <b-form-input
             type="search"
+            v-model="keyword"
             placeholder="Search contact"
+            v-on:keyup.enter="onSearch"
           ></b-form-input>
         </b-col>
       </b-row>
@@ -54,18 +52,29 @@ export default {
   name: 'Contacts',
   data() {
     return {
-      url: process.env.VUE_APP_BASE_URL
+      url: process.env.VUE_APP_BASE_URL,
+      keyword: ''
     }
   },
   methods: {
-    ...mapActions(['getContact'])
+    ...mapActions(['getContact']),
+    onSearch() {
+      const payload = {
+        id: this.user.user_id,
+        keyword: this.keyword
+      }
+      this.getContact(payload)
+    }
   },
   computed: {
     ...mapGetters({ user: 'getUserData', contact: 'contactList' })
   },
   created() {
-    this.getContact(this.user.user_id)
-    console.log(this.contact)
+    const payload = {
+      id: this.user.user_id,
+      keyword: ''
+    }
+    this.getContact(payload)
   }
 }
 </script>

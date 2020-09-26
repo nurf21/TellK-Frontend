@@ -13,7 +13,9 @@ export default {
     getContact(context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .get(`${process.env.VUE_APP_BASE_URL}/contact/${payload}`)
+          .get(
+            `${process.env.VUE_APP_BASE_URL}/contact/${payload.id}?keyword=${payload.keyword}`
+          )
           .then(res => {
             context.commit('setContact', res.data.data)
             resolve(res.data)
