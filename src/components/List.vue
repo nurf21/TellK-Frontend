@@ -1,21 +1,19 @@
 <template>
   <b-container style="padding: 0">
     <b-row class="list-header">
-      <b-col cols="10"><p>TellK</p></b-col>
-      <b-col cols="2">
+      <b-col cols="10" align-self="center"><p>TellK</p></b-col>
+      <b-col cols="2" align-self="center">
         <img src="@/assets/icon/Menu.png" id="pop-burger" alt="toggle-menu" />
       </b-col>
       <Pop />
       <Side />
+      <Contact />
     </b-row>
     <b-row class="list-options">
       <b-col cols="10">
-        <b-form-input
-          type="search"
-          placeholder="Type your message..."
-        ></b-form-input>
+        <b-form-input type="search" placeholder="Search message"></b-form-input>
       </b-col>
-      <b-col cols="2">
+      <b-col cols="2" align-self="center">
         <img src="@/assets/icon/Plus.png" alt="plus" />
       </b-col>
     </b-row>
@@ -55,12 +53,14 @@
 <script>
 import Pop from '../components/Pop'
 import Side from '../components/Side'
+import Contact from '../components/Contact'
 
 export default {
   name: 'List',
   components: {
     Pop,
-    Side
+    Side,
+    Contact
   },
   data() {
     return {

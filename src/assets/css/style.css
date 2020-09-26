@@ -251,6 +251,43 @@
   font-size: 16px;
 }
 
+.contact-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 500px;
+}
+
+.contact-row {
+  margin: 30px auto;
+}
+
+.chat-btn,
+.chat-btn:hover,
+.chat-btn:active,
+.chat-btn:focus {
+  background-color: Transparent;
+  border-color: #7e98df;
+  outline: none;
+  height: 30px;
+  width: 30px;
+  padding: 0;
+  margin: 0 2px;
+}
+
+.delete-btn,
+.delete-btn:hover,
+.delete-btn:active,
+.delete-btn:focus {
+  background-color: Transparent;
+  border-color: #ff0000;
+  outline: none;
+  height: 30px;
+  width: 30px;
+  padding: 0;
+  margin: 0 2px;
+}
+
 .list-options {
   margin: 0 auto 10px;
 }

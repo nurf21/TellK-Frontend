@@ -11,7 +11,7 @@
         </b-col>
         <b-col cols="9"><p>Settings</p></b-col>
       </b-row>
-      <b-row class="burger-menu">
+      <b-row class="burger-menu" v-b-toggle.sidebar-contacts>
         <b-col cols="1">
           <img
             src="@/assets/icon/Contacts.png"
