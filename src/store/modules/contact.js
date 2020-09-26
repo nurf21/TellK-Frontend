@@ -24,6 +24,20 @@ export default {
             reject(err.response)
           })
       })
+    },
+    deleteContact(context, payload) {
+      return new Promise((resolve, reject) => {
+        axios
+          .delete(
+            `${process.env.VUE_APP_BASE_URL}/contact?id=${payload.id}&targetId=${payload.targetId}`
+          )
+          .then(res => {
+            resolve(res.data)
+          })
+          .catch(err => {
+            reject(err.response)
+          })
+      })
     }
   },
   getters: {

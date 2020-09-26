@@ -36,7 +36,7 @@
           <b-button class="chat-btn">
             <b-img :src="require('../assets/icon/chat.png')"></b-img>
           </b-button>
-          <b-button class="delete-btn">
+          <b-button class="delete-btn" @click="onDelete(value)">
             <b-img :src="require('../assets/icon/delete.png')"></b-img>
           </b-button>
         </b-col>
@@ -53,17 +53,55 @@ export default {
   data() {
     return {
       url: process.env.VUE_APP_BASE_URL,
-      keyword: ''
+      keyword: '',
+      isDelete: false
     }
   },
   methods: {
-    ...mapActions(['getContact']),
+    ...mapActions(['getContact', 'deleteContact']),
     onSearch() {
       const payload = {
         id: this.user.user_id,
         keyword: this.keyword
       }
       this.getContact(payload)
+    },
+    onDelete(data) {
+      this.$bvModal
+        .msgBoxConfirm(
+          `Are you sure you want to remove ${data.user_name} from your contact ?`,
+          {
+            cancelVariant: 'info',
+            okVariant: 'danger',
+            headerClass: 'p-2 border-bottom-0',
+            footerClass: 'p-2 border-top-0',
+            centered: true
+          }
+        )
+        .then(value => {
+          this.isDelete = value
+          if (this.isDelete === true) {
+            const payload = {
+              id: this.user.user_id,
+              targetId: data.user_id
+            }
+            this.deleteContact(payload).then(res => {
+              const payloadContact = {
+                id: this.user.user_id,
+                keyword: this.keyword
+              }
+              this.getContact(payloadContact)
+              this.makeToast('success', 'Success', res.msg)
+            })
+          }
+        })
+    },
+    makeToast(variant, title, msg) {
+      this.$bvToast.toast(msg, {
+        title: title,
+        variant: variant,
+        solid: true
+      })
     }
   },
   computed: {
