@@ -2,11 +2,15 @@ import axios from 'axios'
 
 export default {
   state: {
-    contact: {}
+    contact: {},
+    contactInfo: {}
   },
   mutations: {
     setContact(state, payload) {
       state.contact = payload
+    },
+    setContactInfo(state, payload) {
+      state.contactInfo = payload
     }
   },
   actions: {
@@ -43,6 +47,9 @@ export default {
   getters: {
     contactList(state) {
       return state.contact
+    },
+    getContactInfo(state) {
+      return state.contactInfo
     }
   }
 }

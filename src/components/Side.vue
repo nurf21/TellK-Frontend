@@ -89,7 +89,7 @@
       <GmapMap
         :center="{ lat: +user.user_lat, lng: +user.user_lng }"
         :zoom="17.5"
-        map-type-id="terrain"
+        map-type-id="roadmap"
         style="width: 100%; height: 500px"
       >
         <GmapMarker

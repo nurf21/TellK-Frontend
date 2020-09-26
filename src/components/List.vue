@@ -8,6 +8,7 @@
       <Pop />
       <Side />
       <Contact />
+      <Info />
     </b-row>
     <b-row class="list-options">
       <b-col cols="10">
@@ -54,13 +55,15 @@
 import Pop from '../components/Pop'
 import Side from '../components/Side'
 import Contact from '../components/Contact'
+import Info from '../components/Info'
 
 export default {
   name: 'List',
   components: {
     Pop,
     Side,
-    Contact
+    Contact,
+    Info
   },
   data() {
     return {

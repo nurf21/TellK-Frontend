@@ -5,6 +5,7 @@
     shadow
     backdrop
     width="454px"
+    ref="sidebarContacts"
   >
     <b-container class="contact-c">
       <b-row class="list-options" style="margin-top: 30px">
@@ -29,7 +30,14 @@
         <b-col cols="3">
           <b-img :src="url + '/' + value.user_image" class="rooms-pict"></b-img>
         </b-col>
-        <b-col cols="6" align-self="center" class="rooms-name">
+        <b-col
+          cols="6"
+          align-self="center"
+          class="rooms-name"
+          @click="onContact(value)"
+          v-b-toggle.sidebar-info
+          style="cursor: pointer"
+        >
           {{ value.user_name }}
         </b-col>
         <b-col cols="3" align-self="center">
@@ -46,7 +54,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions, mapMutations } from 'vuex'
 
 export default {
   name: 'Contacts',
@@ -59,6 +67,7 @@ export default {
   },
   methods: {
     ...mapActions(['getContact', 'deleteContact']),
+    ...mapMutations(['setContactInfo']),
     onSearch() {
       const payload = {
         id: this.user.user_id,
@@ -95,6 +104,10 @@ export default {
             })
           }
         })
+    },
+    onContact(data) {
+      this.setContactInfo(data)
+      this.$refs.sidebarContacts.hide()
     },
     makeToast(variant, title, msg) {
       this.$bvToast.toast(msg, {
