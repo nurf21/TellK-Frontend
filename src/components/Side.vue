@@ -36,8 +36,9 @@
           <b-col cols="1">
             <b-img :src="require('../assets/icon/placeholder.png')" />
           </b-col>
-          <b-col cols="11"><p>Location</p></b-col>
-
+          <b-col cols="11" @click="$bvModal.show('bv-location')">
+            <p>Location</p>
+          </b-col>
           <b-col cols="1">
             <b-img :src="require('../assets/icon/logout.png')" />
           </b-col>
@@ -79,6 +80,25 @@
           Save
         </b-button>
       </b-form>
+    </b-modal>
+
+    <b-modal id="bv-location" hide-footer centered size="lg">
+      <template v-slot:modal-title>
+        Location
+      </template>
+      <GmapMap
+        :center="{ lat: +user.user_lat, lng: +user.user_lng }"
+        :zoom="17.5"
+        map-type-id="terrain"
+        style="width: 100%; height: 500px"
+      >
+        <GmapMarker
+          :position="{ lat: +user.user_lat, lng: +user.user_lng }"
+          :clickable="true"
+          :draggable="true"
+          icon="https://img.icons8.com/color/48/000000/map-pin.png"
+        />
+      </GmapMap>
     </b-modal>
   </b-sidebar>
 </template>
