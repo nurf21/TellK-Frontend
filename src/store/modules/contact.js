@@ -29,6 +29,19 @@ export default {
           })
       })
     },
+    addContact(context, payload) {
+      console.log(payload)
+      return new Promise((resolve, reject) => {
+        axios
+          .post(`${process.env.VUE_APP_BASE_URL}/contact`, payload)
+          .then(res => {
+            resolve(res.data)
+          })
+          .catch(err => {
+            reject(err.response)
+          })
+      })
+    },
     deleteContact(context, payload) {
       return new Promise((resolve, reject) => {
         axios

@@ -1,8 +1,14 @@
 import axios from 'axios'
 
 export default {
-  state: {},
-  mutations: {},
+  state: {
+    searchResult: {}
+  },
+  mutations: {
+    setSearch(state, payload) {
+      state.searchResult = payload
+    }
+  },
   actions: {
     patchUserImage(context, payload) {
       return new Promise((resolve, reject) => {
@@ -48,7 +54,24 @@ export default {
             reject(err.response)
           })
       })
+    },
+    getUserByEmail(context, payload) {
+      return new Promise((resolve, reject) => {
+        axios
+          .get(`${process.env.VUE_APP_BASE_URL}/user/search/${payload}`)
+          .then(res => {
+            context.commit('setSearch', res.data.data[0])
+            resolve(res.data)
+          })
+          .catch(err => {
+            reject(err.response)
+          })
+      })
     }
   },
-  getters: {}
+  getters: {
+    getSearchResult(state) {
+      return state.searchResult
+    }
+  }
 }

@@ -15,7 +15,11 @@
         <b-form-input type="search" placeholder="Search message"></b-form-input>
       </b-col>
       <b-col cols="2" align-self="center">
-        <img src="@/assets/icon/Plus.png" alt="plus" />
+        <img
+          src="@/assets/icon/Plus.png"
+          alt="plus"
+          v-b-toggle.sidebar-contacts
+        />
       </b-col>
     </b-row>
     <div class="rooms-c">
