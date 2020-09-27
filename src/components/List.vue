@@ -64,6 +64,7 @@ import Side from '../components/Side'
 import Contact from '../components/Contact'
 import Info from '../components/Info'
 import { mapActions, mapGetters, mapMutations } from 'vuex'
+import io from 'socket.io-client'
 
 export default {
   name: 'List',
@@ -75,7 +76,8 @@ export default {
   },
   data() {
     return {
-      url: process.env.VUE_APP_BASE_URL
+      url: process.env.VUE_APP_BASE_URL,
+      socket: io(process.env.VUE_APP_BASE_URL)
       // rooms: [
       //   {
       //     img: require('../assets/img/theresa.png'),
@@ -146,6 +148,7 @@ export default {
       }
       this.getMessageByRoomId(payload)
       this.setSelect(true)
+      this.socket.emit('joinRoom', data.room_id)
     }
   },
   computed: {

@@ -49,6 +49,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import io from 'socket.io-client'
 
 export default {
   name: 'Chat',
@@ -60,7 +61,8 @@ export default {
       //   status: 'Online'
       // },
       url: process.env.VUE_APP_BASE_URL,
-      msg: null
+      msg: null,
+      socket: io(process.env.VUE_APP_BASE_URL)
     }
   },
   methods: {
@@ -82,11 +84,20 @@ export default {
       }
       this.getMessageByRoomId(payloadRoom)
       this.scrollToEnd()
+      const setData = {
+        message: this.msg,
+        class: 'sender',
+        room: this.room.room_id
+      }
+      this.socket.emit('globalMessage', setData)
       this.msg = ''
     }
   },
   mounted() {
     this.scrollToEnd()
+    this.socket.on('chatMessage', data => {
+      this.chat.push(data)
+    })
   },
   computed: {
     ...mapGetters({
