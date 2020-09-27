@@ -89,7 +89,7 @@ export default {
         class: 'sender',
         room: this.room.room_id
       }
-      this.socket.emit('globalMessage', setData)
+      this.socket.emit('roomMessage', setData)
       this.msg = ''
     }
   },
