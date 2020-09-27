@@ -22,6 +22,18 @@ export default {
             reject(err.response)
           })
       })
+    },
+    createRoom(context, payload) {
+      return new Promise((resolve, reject) => {
+        axios
+          .post(`${process.env.VUE_APP_BASE_URL}/room`, payload)
+          .then(res => {
+            resolve(res.data)
+          })
+          .catch(err => {
+            reject(err.response)
+          })
+      })
     }
   },
   getters: {

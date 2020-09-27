@@ -41,7 +41,7 @@
           {{ value.user_name }}
         </b-col>
         <b-col cols="3" align-self="center">
-          <b-button class="chat-btn">
+          <b-button class="chat-btn" @click="onChat(value)">
             <b-img :src="require('../assets/icon/chat.png')"></b-img>
           </b-button>
           <b-button class="delete-btn" @click="onDelete(value)">
@@ -66,7 +66,12 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['getContact', 'deleteContact']),
+    ...mapActions([
+      'getContact',
+      'deleteContact',
+      'createRoom',
+      'getRoomByUserId'
+    ]),
     ...mapMutations(['setContactInfo']),
     onSearch() {
       const payload = {
@@ -109,6 +114,24 @@ export default {
       this.setContactInfo(data)
       this.$refs.sidebarContacts.hide()
     },
+    onChat(data) {
+      const check = this.rooms.some(el => {
+        return el.user_id === data.user_id
+      })
+      if (check) {
+        this.makeToast('info', 'Info', 'Room is already exists')
+      } else {
+        const payload = {
+          user_id: this.user.user_id,
+          target_id: data.user_id
+        }
+        this.createRoom(payload).then(res => {
+          this.makeToast('success', 'Success', res.msg)
+          this.getRoomByUserId(this.user.user_id)
+          this.$refs.sidebarContacts.hide()
+        })
+      }
+    },
     makeToast(variant, title, msg) {
       this.$bvToast.toast(msg, {
         title: title,
@@ -118,7 +141,11 @@ export default {
     }
   },
   computed: {
-    ...mapGetters({ user: 'getUserData', contact: 'contactList' })
+    ...mapGetters({
+      user: 'getUserData',
+      contact: 'contactList',
+      rooms: 'roomList'
+    })
   },
   created() {
     const payload = {
