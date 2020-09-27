@@ -23,7 +23,12 @@
       </b-col>
     </b-row>
     <div class="rooms-c">
-      <b-row class="list-rooms" v-for="(value, index) in rooms" :key="index">
+      <b-row
+        class="list-rooms"
+        v-for="(value, index) in rooms"
+        :key="index"
+        @click="onSelect(value)"
+      >
         <b-col cols="3">
           <b-img :src="url + '/' + value.user_image" class="rooms-pict"></b-img>
         </b-col>
@@ -58,7 +63,7 @@ import Pop from '../components/Pop'
 import Side from '../components/Side'
 import Contact from '../components/Contact'
 import Info from '../components/Info'
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters, mapMutations } from 'vuex'
 
 export default {
   name: 'List',
@@ -131,10 +136,24 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['getRoomByUserId'])
+    ...mapActions(['getRoomByUserId', 'getMessageByRoomId']),
+    ...mapMutations(['setSelect', 'setSelectedRoom']),
+    onSelect(data) {
+      this.setSelectedRoom(data)
+      const payload = {
+        roomId: data.room_id,
+        userId: this.user.user_id
+      }
+      this.getMessageByRoomId(payload)
+      this.setSelect(true)
+    }
   },
   computed: {
-    ...mapGetters({ user: 'getUserData', rooms: 'roomList' })
+    ...mapGetters({
+      user: 'getUserData',
+      rooms: 'roomList',
+      chat: 'getMessage'
+    })
   },
   created() {
     this.getRoomByUserId(this.user.user_id)

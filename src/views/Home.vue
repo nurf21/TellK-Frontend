@@ -12,7 +12,7 @@
 import List from '@/components/List'
 import Empty from '@/components/Empty'
 import Room from '@/components/Room'
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters, mapMutations } from 'vuex'
 
 export default {
   name: 'Home',
@@ -21,15 +21,12 @@ export default {
     Empty,
     Room
   },
-  data() {
-    return {
-      isSelected: false
-    }
-  },
   methods: {
-    ...mapActions(['getUserById', 'patchLocation'])
+    ...mapActions(['getUserById', 'patchLocation']),
+    ...mapMutations(['setSelect'])
   },
   created() {
+    this.setSelect(false)
     this.getUserById(this.user.user_id)
     this.$getLocation()
       .then(coordinates => {
@@ -51,7 +48,7 @@ export default {
       })
   },
   computed: {
-    ...mapGetters({ user: 'getUserData' })
+    ...mapGetters({ user: 'getUserData', isSelected: 'getSelect' })
   }
 }
 </script>

@@ -2,11 +2,19 @@ import axios from 'axios'
 
 export default {
   state: {
-    rooms: {}
+    rooms: {},
+    isSelected: false,
+    selectedRoom: {}
   },
   mutations: {
     setRooms(state, payload) {
       state.rooms = payload
+    },
+    setSelect(state, payload) {
+      state.isSelected = payload
+    },
+    setSelectedRoom(state, payload) {
+      state.selectedRoom = payload
     }
   },
   actions: {
@@ -39,6 +47,12 @@ export default {
   getters: {
     roomList(state) {
       return state.rooms
+    },
+    getSelect(state) {
+      return state.isSelected
+    },
+    getSelectedRoom(state) {
+      return state.selectedRoom
     }
   }
 }
