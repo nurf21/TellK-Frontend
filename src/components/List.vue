@@ -148,7 +148,7 @@ export default {
       }
       this.getMessageByRoomId(payload)
       this.setSelect(true)
-      this.socket.emit('joinRoom', data.room_id)
+      // this.socket.emit('joinRoom', data.room_id)
     }
   },
   computed: {

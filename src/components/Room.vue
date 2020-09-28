@@ -94,6 +94,9 @@ export default {
     }
   },
   mounted() {
+    if (this.room) {
+      this.socket.emit('joinRoom', this.room.room_id)
+    }
     this.scrollToEnd()
     this.socket.on('chatMessage', data => {
       this.chat.push(data)
