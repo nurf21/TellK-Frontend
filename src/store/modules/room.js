@@ -31,6 +31,19 @@ export default {
           })
       })
     },
+    searchRoom(context, payload) {
+      return new Promise((resolve, reject) => {
+        axios
+          .get(`${process.env.VUE_APP_BASE_URL}/room/search/?id=${payload.id}&keyword=${payload.keyword}`)
+          .then(res => {
+            context.commit('setRooms', res.data.data)
+            resolve(res.data)
+          })
+          .catch(err => {
+            reject(err.response)
+          })
+      })
+    },
     createRoom(context, payload) {
       return new Promise((resolve, reject) => {
         axios

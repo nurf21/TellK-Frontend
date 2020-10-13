@@ -12,7 +12,12 @@
     </b-row>
     <b-row class="list-options">
       <b-col cols="10">
-        <b-form-input type="search" placeholder="Search message"></b-form-input>
+        <b-form-input
+          type="search"
+          placeholder="Search name"
+          v-model="keyword"
+          v-on:keyup.enter="onSearch"
+        ></b-form-input>
       </b-col>
       <b-col cols="2" align-self="center">
         <img
@@ -34,13 +39,13 @@
         </b-col>
         <b-col cols="6" style="padding: 0">
           <p class="rooms-name">{{ value.user_name }}</p>
-          <p :class="value.class" v-if="value.isSender">
-            Me: {{ value.recent }}
+          <p class="read" v-if="value.recent.user_id === user.user_id">
+            Me: {{ value.recent.message.slice(0, 10) }}...
           </p>
-          <p :class="value.class" v-else>{{ value.recent }}</p>
+          <p class="read" v-else>{{ value.recent }}</p>
         </b-col>
         <b-col cols="3" class="rooms-time">
-          <p>{{ value.time }}</p>
+          <p>{{ value.recent.message_created_at.slice(0, 16) }}</p>
           <b-badge v-if="value.unread > 0" class="counter">
             {{ value.unread }}
           </b-badge>
@@ -78,7 +83,8 @@ export default {
     return {
       url: process.env.VUE_APP_BASE_URL,
       socket: io(process.env.VUE_APP_BASE_URL),
-      prevRoom: ''
+      prevRoom: '',
+      keyword: ''
       // rooms: [
       //   {
       //     img: require('../assets/img/theresa.png'),
@@ -139,7 +145,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['getRoomByUserId', 'getMessageByRoomId']),
+    ...mapActions(['getRoomByUserId', 'getMessageByRoomId', 'searchRoom']),
     ...mapMutations(['setSelect', 'setSelectedRoom', 'pushMessage']),
     onSelect(data) {
       this.setSelectedRoom(data)
@@ -158,6 +164,17 @@ export default {
           newRoom: data.room_id
         })
         this.prevRoom = data.room_id
+      }
+    },
+    onSearch() {
+      if (this.keyword === '') {
+        this.getRoomByUserId(this.user.user_id)
+      } else {
+        const payload = {
+          id: this.user.user_id,
+          keyword: this.keyword
+        }
+        this.searchRoom(payload)
       }
     }
   },
