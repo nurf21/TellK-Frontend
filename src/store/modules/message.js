@@ -7,6 +7,9 @@ export default {
   mutations: {
     setMessage(state, payload) {
       state.message = payload
+    },
+    pushMessage(state, payload) {
+      state.message.push(payload)
     }
   },
   actions: {

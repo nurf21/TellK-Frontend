@@ -77,7 +77,8 @@ export default {
   data() {
     return {
       url: process.env.VUE_APP_BASE_URL,
-      socket: io(process.env.VUE_APP_BASE_URL)
+      socket: io(process.env.VUE_APP_BASE_URL),
+      prevRoom: ''
       // rooms: [
       //   {
       //     img: require('../assets/img/theresa.png'),
@@ -139,7 +140,7 @@ export default {
   },
   methods: {
     ...mapActions(['getRoomByUserId', 'getMessageByRoomId']),
-    ...mapMutations(['setSelect', 'setSelectedRoom']),
+    ...mapMutations(['setSelect', 'setSelectedRoom', 'pushMessage']),
     onSelect(data) {
       this.setSelectedRoom(data)
       const payload = {
@@ -148,7 +149,16 @@ export default {
       }
       this.getMessageByRoomId(payload)
       this.setSelect(true)
-      // this.socket.emit('joinRoom', data.room_id)
+      if (!this.prevRoom) {
+        this.socket.emit('joinRoom', data.room_id)
+        this.prevRoom = data.room_id
+      } else {
+        this.socket.emit('changeRoom', {
+          prevRoom: this.prevRoom,
+          newRoom: data.room_id
+        })
+        this.prevRoom = data.room_id
+      }
     }
   },
   computed: {
@@ -159,7 +169,13 @@ export default {
     })
   },
   created() {
+    this.prevRoom = ''
     this.getRoomByUserId(this.user.user_id)
+  },
+  mounted() {
+    this.socket.on('chatMessage', data => {
+      this.pushMessage(data)
+    })
   }
 }
 </script>

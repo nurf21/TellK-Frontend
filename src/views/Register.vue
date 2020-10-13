@@ -62,23 +62,16 @@
         </b-form-group>
 
         <b-button type="submit" class="login-btn">Register</b-button>
-        <p class="alt-login">Register with</p>
-        <b-button class="google-btn" v-b-modal.soon>Google</b-button>
       </b-form>
-      <Soon />
     </b-container>
   </div>
 </template>
 
 <script>
-import Soon from '../components/Soon'
 import { mapActions } from 'vuex'
 
 export default {
   name: 'Register',
-  components: {
-    Soon
-  },
   data() {
     return {
       form: {},

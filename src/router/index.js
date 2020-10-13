@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import Login from '@/views/Login.vue'
 import Register from '@/views/Register.vue'
 import Forgot from '@/views/Forgot.vue'
+import Reset from '@/views/Reset.vue'
 import store from '../store'
 
 Vue.use(VueRouter)
@@ -31,6 +32,12 @@ const routes = [
     path: '/forgot',
     name: 'Forgot',
     component: Forgot,
+    meta: { requiresVisitor: true }
+  },
+  {
+    path: '/reset',
+    name: 'Reset',
+    component: Reset,
     meta: { requiresVisitor: true }
   }
 ]

@@ -29,27 +29,20 @@
         </router-link>
 
         <b-button type="submit" class="login-btn">Login</b-button>
-        <p class="alt-login">Login with</p>
-        <b-button class="google-btn" v-b-modal.soon>Google</b-button>
         <p class="sign-up">
           Don't have an account?
           <router-link to="/register"><span>Sign Up</span></router-link>
         </p>
       </b-form>
-      <Soon />
     </b-container>
   </div>
 </template>
 
 <script>
-import Soon from '../components/Soon'
 import { mapActions } from 'vuex'
 
 export default {
   name: 'Login',
-  components: {
-    Soon
-  },
   data() {
     return {
       form: {}
