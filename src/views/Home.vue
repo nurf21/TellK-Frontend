@@ -22,10 +22,13 @@ export default {
     Room
   },
   methods: {
-    ...mapActions(['getUserById', 'patchLocation']),
+    ...mapActions(['getUserById', 'patchLocation', 'logout']),
     ...mapMutations(['setSelect'])
   },
   created() {
+    if (this.user.user_id === undefined) {
+      this.logout()
+    }
     this.setSelect(false)
     this.getUserById(this.user.user_id)
     this.$getLocation()

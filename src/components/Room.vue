@@ -10,7 +10,7 @@
           <p class="room-status">{{ room.status }}</p>
         </b-col>
         <b-col cols="1" align-self="center">
-          <!-- <b-img :src="require('../assets/icon/Profile menu.png')" /> -->
+          <b-img :src="require('../assets/icon/Profile menu.png')" />
         </b-col>
       </b-row>
     </div>
@@ -55,18 +55,13 @@ export default {
   name: 'Chat',
   data() {
     return {
-      // room: {
-      //   pict: require('../assets/img/mother.png'),
-      //   name: 'Mother ❤',
-      //   status: 'Online'
-      // },
       url: process.env.VUE_APP_BASE_URL,
       msg: null,
       socket: io(process.env.VUE_APP_BASE_URL)
     }
   },
   methods: {
-    ...mapActions(['sendMessage', 'getMessageByRoomId']),
+    ...mapActions(['sendMessage', 'getMessageByRoomId', 'getRoomByUserId']),
     scrollToEnd() {
       const container = this.$el.querySelector('#chat-c')
       container.scrollTop = container.scrollHeight
@@ -82,8 +77,11 @@ export default {
         roomId: this.room.room_id,
         userId: this.user.user_id
       }
-      this.getMessageByRoomId(payloadRoom)
-      this.scrollToEnd()
+      this.getMessageByRoomId(payloadRoom).then(result => {
+        console.log(result.msg)
+        this.scrollToEnd()
+        this.getRoomByUserId(this.user.user_id)
+      })
       const setData = {
         message: this.msg,
         class: 'sender',
@@ -94,17 +92,12 @@ export default {
     }
   },
   mounted() {
-    // if (this.room) {
-    //   this.socket.emit('joinRoom', this.room.room_id)
-    // }
     this.scrollToEnd()
-    // this.socket.on('chatMessage', data => {
-    //   this.chat.push(data)
-    // })
   },
   computed: {
     ...mapGetters({
       room: 'getSelectedRoom',
+      rooms: 'roomList',
       chat: 'getMessage',
       user: 'getUserData'
     })

@@ -42,7 +42,7 @@
           <p class="read" v-if="value.recent.user_id === user.user_id">
             Me: {{ value.recent.message.slice(0, 10) }}...
           </p>
-          <p class="read" v-else>{{ value.recent }}</p>
+          <p class="read" v-else>{{ value.recent.message.slice(0, 10) }}...</p>
         </b-col>
         <b-col cols="3" class="rooms-time">
           <p>{{ value.recent.message_created_at.slice(0, 16) }}</p>
@@ -85,69 +85,14 @@ export default {
       socket: io(process.env.VUE_APP_BASE_URL),
       prevRoom: '',
       keyword: ''
-      // rooms: [
-      //   {
-      //     img: require('../assets/img/theresa.png'),
-      //     name: 'Theresa Webb',
-      //     recent: 'Why did you do that',
-      //     class: 'unread',
-      //     time: '15:20',
-      //     unread: 2,
-      //     isSender: false
-      //   },
-      //   {
-      //     img: require('../assets/img/calvin.png'),
-      //     name: 'Calvin Flores',
-      //     recent: 'Hi, bro! Come to my house!',
-      //     class: 'unread',
-      //     time: '15:13',
-      //     unread: 1,
-      //     isSender: false
-      //   },
-      //   {
-      //     img: require('../assets/img/gregory.png'),
-      //     name: 'Gregory Bell',
-      //     recent: 'Will you stop ignoring me?',
-      //     class: 'unread',
-      //     time: '15:13',
-      //     unread: 164,
-      //     isSender: false
-      //   },
-      //   {
-      //     img: require('../assets/img/soham.png'),
-      //     name: 'Soham Henry',
-      //     recent: 'Bro, just fuck off',
-      //     class: 'sent and read',
-      //     time: '8:30',
-      //     unread: 0,
-      //     isSender: true
-      //   },
-      //   {
-      //     img: require('../assets/img/mother.png'),
-      //     name: 'Mother ❤',
-      //     recent: 'Yes, of course come, ... ',
-      //     class: 'sent',
-      //     time: '7:20',
-      //     unread: 0,
-      //     status: 'sent',
-      //     isSender: true
-      //   },
-      //   {
-      //     img: require('../assets/img/brother.png'),
-      //     name: 'Brother',
-      //     recent: 'Ok. Good bay!',
-      //     class: 'read',
-      //     time: 'Yesterday',
-      //     unread: 0,
-      //     isSender: false
-      //   }
-      // ]
     }
   },
   methods: {
     ...mapActions(['getRoomByUserId', 'getMessageByRoomId', 'searchRoom']),
     ...mapMutations(['setSelect', 'setSelectedRoom', 'pushMessage']),
     onSelect(data) {
+      this.keyword === ''
+      this.getRoomByUserId(this.user.user_id)
       this.setSelectedRoom(data)
       const payload = {
         roomId: data.room_id,
@@ -186,12 +131,12 @@ export default {
     })
   },
   created() {
-    this.prevRoom = ''
     this.getRoomByUserId(this.user.user_id)
   },
   mounted() {
     this.socket.on('chatMessage', data => {
       this.pushMessage(data)
+      this.getRoomByUserId(this.user.user_id)
     })
   }
 }
