@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-popover target="pop-burger" placement="bottomleft">
-      <b-row class="burger-menu" v-b-toggle.sidebar-profle>
+      <b-row class="burger-menu" @click="clickMenu(1)" style="cursor: pointer;">
         <b-col cols="1">
           <img
             src="@/assets/icon/Settings.png"
@@ -11,7 +11,7 @@
         </b-col>
         <b-col cols="9"><p>Settings</p></b-col>
       </b-row>
-      <b-row class="burger-menu" v-b-toggle.sidebar-contacts>
+      <b-row class="burger-menu" @click="clickMenu(2)" style="cursor: pointer;">
         <b-col cols="1">
           <img
             src="@/assets/icon/Contacts.png"
@@ -25,11 +25,7 @@
         <b-col cols="1">
           <img src="@/assets/icon/Invite friends.png" alt="add-contact" />
         </b-col>
-        <b-col
-          cols="9"
-          @click="$bvModal.show('bv-add')"
-          style="cursor: pointer"
-        >
+        <b-col cols="9" @click="clickMenu(3)" style="cursor: pointer;">
           <p>Add Contact</p>
         </b-col>
       </b-row>
@@ -85,6 +81,20 @@ export default {
   },
   methods: {
     ...mapActions(['getUserByEmail', 'addContact', 'getContact']),
+    clickMenu(options) {
+      switch (options) {
+        case 1:
+          this.$root.$emit('bv::toggle::collapse', 'sidebar-profile')
+          break
+        case 2:
+          this.$root.$emit('bv::toggle::collapse', 'sidebar-contacts')
+          break
+        case 3:
+          this.$bvModal.show('bv-add')
+          break
+      }
+      this.$root.$emit('bv::hide::popover')
+    },
     onSearch() {
       this.notFound = false
       this.found = false
