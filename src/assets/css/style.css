@@ -426,20 +426,33 @@
   line-height: 185.17%;
   letter-spacing: -0.165px;
   padding: 10px 20px;
-  margin: 5px 20px 5px;
   max-width: 290px;
 }
 
 .sender {
   border-radius: 35px 35px 35px 10px;
+  margin: 10px 0 10px 20px;
   background: #7e98df;
   color: #ffffff;
 }
 
 .receiver {
   border-radius: 35px 35px 10px 35px;
+  margin: 10px 20px 10px 0;
   background: #ffffff;
   color: #232323;
+}
+
+.time-sender,
+.time-receiver {
+  font-size: 12px;
+  line-height: 17px;
+  letter-spacing: -0.165px;
+  color: #848484;
+}
+
+.time-receiver {
+  text-align: right;
 }
 
 .input-c input {

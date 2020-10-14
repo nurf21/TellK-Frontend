@@ -10,6 +10,11 @@ export default {
     setRooms(state, payload) {
       state.rooms = payload
     },
+    setStatus(state, payload) {
+      if (state.selectedRoom.user_id === payload.id) {
+        state.selectedRoom.user_activity = payload.status
+      }
+    },
     setSelect(state, payload) {
       state.isSelected = payload
     },

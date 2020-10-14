@@ -8,6 +8,7 @@
           <b-form-input
             id="input-1"
             v-model="form.user_email"
+            v-focus
             type="email"
             required
             placeholder="Enter email"
@@ -66,6 +67,13 @@ export default {
         .catch(error => {
           this.makeToast('danger', 'Error', error.data.msg)
         })
+    }
+  },
+  directives: {
+    focus: {
+      inserted: el => {
+        el.focus()
+      }
     }
   }
 }

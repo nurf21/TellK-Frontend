@@ -104,6 +104,7 @@
 </template>
 
 <script>
+import io from 'socket.io-client'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
@@ -113,7 +114,8 @@ export default {
       url: process.env.VUE_APP_BASE_URL,
       formImage: {},
       formProfile: {},
-      isLogout: false
+      isLogout: false,
+      socket: io(process.env.VUE_APP_BASE_URL)
     }
   },
   methods: {
@@ -183,7 +185,8 @@ export default {
         .then(value => {
           this.isLogout = value
           if (this.isLogout) {
-            this.logout()
+            this.socket.emit('offline', this.user.user_id)
+            this.logout(this.user.user_id)
           }
         })
     }

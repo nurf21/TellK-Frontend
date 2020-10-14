@@ -12,6 +12,7 @@
 import List from '@/components/List'
 import Empty from '@/components/Empty'
 import Room from '@/components/Room'
+import io from 'socket.io-client'
 import { mapActions, mapGetters, mapMutations } from 'vuex'
 
 export default {
@@ -21,14 +22,20 @@ export default {
     Empty,
     Room
   },
+  data() {
+    return {
+      socket: io(process.env.VUE_APP_BASE_URL)
+    }
+  },
   methods: {
     ...mapActions(['getUserById', 'patchLocation', 'logout']),
     ...mapMutations(['setSelect'])
   },
   created() {
     if (this.user.user_id === undefined) {
-      this.logout()
+      this.logout(this.user.user_id)
     }
+    this.socket.emit('online', this.user.user_id)
     this.setSelect(false)
     this.getUserById(this.user.user_id)
     this.$getLocation()

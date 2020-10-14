@@ -89,7 +89,12 @@ export default {
   },
   methods: {
     ...mapActions(['getRoomByUserId', 'getMessageByRoomId', 'searchRoom']),
-    ...mapMutations(['setSelect', 'setSelectedRoom', 'pushMessage']),
+    ...mapMutations([
+      'setSelect',
+      'setSelectedRoom',
+      'pushMessage',
+      'setStatus'
+    ]),
     onSelect(data) {
       this.keyword === ''
       this.getRoomByUserId(this.user.user_id)
@@ -137,6 +142,20 @@ export default {
     this.socket.on('chatMessage', data => {
       this.pushMessage(data)
       this.getRoomByUserId(this.user.user_id)
+    })
+    this.socket.on('setOnline', data => {
+      const payload = {
+        id: data,
+        status: 1
+      }
+      this.setStatus(payload)
+    })
+    this.socket.on('setOffline', data => {
+      const payload = {
+        id: data,
+        status: 0
+      }
+      this.setStatus(payload)
     })
   }
 }

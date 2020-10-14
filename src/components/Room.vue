@@ -7,9 +7,19 @@
         </b-col>
         <b-col cols="10" align-self="center">
           <p class="room-name">{{ room.user_name }}</p>
-          <p class="room-status">{{ room.status }}</p>
+          <p class="room-status mt-2" v-if="room.user_activity === 0">
+            Offline
+          </p>
+          <p class="room-status mt-2" v-if="room.user_activity === 1">
+            Online
+          </p>
         </b-col>
-        <b-col cols="1" align-self="center">
+        <b-col
+          cols="1"
+          align-self="center"
+          v-b-toggle.sidebar-info
+          @click="onDetail()"
+        >
           <b-img :src="require('../assets/icon/Profile menu.png')" />
         </b-col>
       </b-row>
@@ -20,7 +30,21 @@
           <div :class="value.class" v-if="value.class === 'sender'">
             {{ value.message }}
           </div>
-          <b-col v-if="value.class === 'receiver'">
+          <b-col
+            v-if="value.class === 'sender'"
+            class="time-sender"
+            align-self="center"
+          >
+            {{ value.message_created_at.slice(0, 16) }}
+          </b-col>
+          <b-col v-if="value.class === 'receiver'" style="display: flex;">
+            <b-col
+              v-if="value.class === 'receiver'"
+              class="time-receiver"
+              align-self="center"
+            >
+              {{ value.message_created_at.slice(0, 16) }}
+            </b-col>
             <div :class="value.class" class="float-right">
               {{ value.message }}
             </div>
@@ -48,7 +72,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions, mapMutations } from 'vuex'
 import io from 'socket.io-client'
 
 export default {
@@ -62,6 +86,7 @@ export default {
   },
   methods: {
     ...mapActions(['sendMessage', 'getMessageByRoomId', 'getRoomByUserId']),
+    ...mapMutations(['setContactInfo']),
     scrollToEnd() {
       const container = this.$el.querySelector('#chat-c')
       container.scrollTop = container.scrollHeight
@@ -89,6 +114,11 @@ export default {
       }
       this.socket.emit('roomMessage', setData)
       this.msg = ''
+    },
+    onDetail() {
+      this.setContactInfo(
+        this.contacts.filter(value => value.user_id === this.room.user_id)[0]
+      )
     }
   },
   mounted() {
@@ -99,7 +129,8 @@ export default {
       room: 'getSelectedRoom',
       rooms: 'roomList',
       chat: 'getMessage',
-      user: 'getUserData'
+      user: 'getUserData',
+      contacts: 'contactList'
     })
   }
 }

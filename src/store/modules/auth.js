@@ -35,11 +35,21 @@ export default {
           })
       })
     },
-    logout(context) {
-      localStorage.removeItem('token')
-      sessionStorage.clear()
-      context.commit('delUser')
-      router.push('/login')
+    logout(context, payload) {
+      return new Promise((resolve, reject) => {
+        axios
+          .patch(`${process.env.VUE_APP_BASE_URL}/user/logout/${payload}`)
+          .then(response => {
+            resolve(response.data)
+          })
+          .catch(error => {
+            reject(error.response)
+          })
+        localStorage.removeItem('token')
+        sessionStorage.clear()
+        context.commit('delUser')
+        router.push('/login')
+      })
     },
     register(context, payload) {
       return new Promise((resolve, reject) => {
