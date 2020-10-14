@@ -126,6 +126,13 @@ export default {
         }
         this.searchRoom(payload)
       }
+    },
+    makeToast(variant, title, msg) {
+      this.$bvToast.toast(msg, {
+        title: title,
+        variant: variant,
+        solid: true
+      })
     }
   },
   computed: {
@@ -142,6 +149,11 @@ export default {
     this.socket.on('chatMessage', data => {
       this.pushMessage(data)
       this.getRoomByUserId(this.user.user_id)
+    })
+    this.socket.on('notification', data => {
+      if (data.user === this.user.user_id) {
+        this.makeToast('info', data.name, data.message)
+      }
     })
     this.socket.on('setOnline', data => {
       const payload = {

@@ -35,7 +35,7 @@
             class="time-sender"
             align-self="center"
           >
-            {{ value.message_created_at.slice(0, 16) }}
+            {{ value.message_created_at }}
           </b-col>
           <b-col v-if="value.class === 'receiver'" style="display: flex;">
             <b-col
@@ -43,7 +43,7 @@
               class="time-receiver"
               align-self="center"
             >
-              {{ value.message_created_at.slice(0, 16) }}
+              {{ value.message_created_at }}
             </b-col>
             <div :class="value.class" class="float-right">
               {{ value.message }}
@@ -74,6 +74,7 @@
 <script>
 import { mapGetters, mapActions, mapMutations } from 'vuex'
 import io from 'socket.io-client'
+import moment from 'moment'
 
 export default {
   name: 'Chat',
@@ -110,7 +111,10 @@ export default {
       const setData = {
         message: this.msg,
         class: 'sender',
-        room: this.room.room_id
+        message_created_at: moment().format('MMMM Do YYYY, h:mm a'),
+        room: this.room.room_id,
+        user: this.room.user_id,
+        name: this.user.user_name
       }
       this.socket.emit('roomMessage', setData)
       this.msg = ''

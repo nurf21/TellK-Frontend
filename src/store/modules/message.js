@@ -1,4 +1,5 @@
 import axios from 'axios'
+import moment from 'moment'
 
 export default {
   state: {
@@ -20,6 +21,9 @@ export default {
             `${process.env.VUE_APP_BASE_URL}/message?roomId=${payload.roomId}&userId=${payload.userId}`
           )
           .then(res => {
+            for (let i = 0; i < res.data.data.length; i++) {
+              res.data.data[i].message_created_at = moment(res.data.data[i].message_created_at).format('MMMM Do YYYY, h:mm a')
+            }
             context.commit('setMessage', res.data.data)
             resolve(res.data)
           })

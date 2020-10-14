@@ -7,8 +7,10 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import * as VueGoogleMaps from 'vue2-google-maps'
 import VueGeolocation from 'vue-browser-geolocation'
+import moment from 'moment'
 
 Vue.config.productionTip = false
+Vue.prototype.moment = moment
 
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
@@ -19,6 +21,7 @@ Vue.use(VueGoogleMaps, {
   }
 })
 Vue.use(VueGeolocation)
+Vue.use(require('vue-moment'))
 
 new Vue({
   router,
