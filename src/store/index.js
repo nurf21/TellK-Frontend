@@ -6,6 +6,7 @@ import User from './modules/user'
 import Contact from './modules/contact'
 import Room from './modules/room'
 import Message from './modules/message'
+import Group from './modules/group'
 
 Vue.use(Vuex)
 
@@ -18,7 +19,8 @@ export default new Vuex.Store({
     User,
     Contact,
     Room,
-    Message
+    Message,
+    Group
   },
   plugins: [
     createPersistedState({

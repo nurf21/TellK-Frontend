@@ -10,56 +10,87 @@
       <Contact />
       <Info />
     </b-row>
-    <b-row class="list-options">
-      <b-col cols="10">
-        <b-form-input
-          type="search"
-          placeholder="Search name"
-          v-model="keyword"
-          v-on:keyup.enter="onSearch"
-        ></b-form-input>
-      </b-col>
-      <b-col cols="2" align-self="center">
-        <img
-          src="@/assets/icon/Plus.png"
-          alt="plus"
-          v-b-toggle.sidebar-contacts
-        />
-      </b-col>
-    </b-row>
-    <div class="rooms-c">
-      <b-row
-        class="list-rooms"
-        v-for="(value, index) in rooms"
-        :key="index"
-        @click="onSelect(value)"
-      >
-        <b-col cols="3">
-          <b-img :src="url + '/' + value.user_image" class="rooms-pict"></b-img>
-        </b-col>
-        <b-col cols="6" style="padding: 0">
-          <p class="rooms-name">{{ value.user_name }}</p>
-          <p class="read" v-if="value.recent.user_id === user.user_id">
-            Me: {{ value.recent.message.slice(0, 10) }}...
-          </p>
-          <p class="read" v-else>{{ value.recent.message.slice(0, 10) }}...</p>
-        </b-col>
-        <b-col cols="3" class="rooms-time">
-          <p>{{ value.recent.message_created_at.slice(0, 16) }}</p>
-          <b-badge v-if="value.unread > 0" class="counter">
-            {{ value.unread }}
-          </b-badge>
-          <b-img
-            :src="require('../assets/icon/Read-mark.png')"
-            v-if="value.class === 'sent and read'"
-          />
-          <b-img
-            :src="require('../assets/icon/Sent-mark.png')"
-            v-if="value.class === 'sent'"
-          />
-        </b-col>
-      </b-row>
-    </div>
+    <b-tabs content-class="mt-3" fill>
+      <b-tab title="Private" active>
+        <b-row class="list-options">
+          <b-col cols="10">
+            <b-form-input
+              type="search"
+              placeholder="Search name"
+              v-model="keyword"
+              v-on:keyup.enter="onSearch"
+            ></b-form-input>
+          </b-col>
+          <b-col cols="2" align-self="center">
+            <img
+              src="@/assets/icon/Plus.png"
+              alt="plus"
+              v-b-toggle.sidebar-contacts
+            />
+          </b-col>
+        </b-row>
+        <div class="rooms-c">
+          <b-row
+            class="list-rooms"
+            v-for="(value, index) in rooms"
+            :key="index"
+            @click="onSelect(value)"
+          >
+            <b-col cols="3">
+              <b-img
+                :src="url + '/' + value.user_image"
+                class="rooms-pict"
+              ></b-img>
+            </b-col>
+            <b-col cols="6" style="padding: 0">
+              <p class="rooms-name">{{ value.user_name }}</p>
+              <p class="read" v-if="value.recent.user_id === user.user_id">
+                Me: {{ value.recent.message.slice(0, 10) }}...
+              </p>
+              <p class="read" v-else>
+                {{ value.recent.message.slice(0, 10) }}...
+              </p>
+            </b-col>
+            <b-col cols="3" class="rooms-time">
+              <p>{{ value.recent.message_created_at.slice(0, 16) }}</p>
+              <b-badge v-if="value.unread > 0" class="counter">
+                {{ value.unread }}
+              </b-badge>
+              <b-img
+                :src="require('../assets/icon/Read-mark.png')"
+                v-if="value.class === 'sent and read'"
+              />
+              <b-img
+                :src="require('../assets/icon/Sent-mark.png')"
+                v-if="value.class === 'sent'"
+              />
+            </b-col>
+          </b-row>
+        </div>
+      </b-tab>
+
+      <b-tab title="Group">
+        <div class="rooms-c">
+          <b-row
+            class="list-rooms"
+            v-for="(value, index) in groups"
+            :key="index"
+            @click="onSelectGroup(value)"
+          >
+            <b-col cols="9">
+              <p class="rooms-name">{{ value.group_name }}</p>
+              <p class="read">
+                {{ value.recent.user_name }}:
+                {{ value.recent.message.slice(0, 10) }}...
+              </p>
+            </b-col>
+            <b-col cols="3" class="rooms-time">
+              <p>{{ value.recent.message_created_at.slice(0, 16) }}</p>
+            </b-col>
+          </b-row>
+        </div>
+      </b-tab>
+    </b-tabs>
   </b-container>
 </template>
 
@@ -88,7 +119,12 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['getRoomByUserId', 'getMessageByRoomId', 'searchRoom']),
+    ...mapActions([
+      'getRoomByUserId',
+      'getMessageByRoomId',
+      'searchRoom',
+      'getAllGroups'
+    ]),
     ...mapMutations([
       'setSelect',
       'setSelectedRoom',
@@ -116,6 +152,32 @@ export default {
         this.prevRoom = data.room_id
       }
     },
+    onSelectGroup(data) {
+      this.getAllGroups()
+      const setRoom = {
+        recent: data.recent,
+        room_id: data.group_id,
+        room_updated_at: data.group_updated_at,
+        user_name: data.group_name
+      }
+      this.setSelectedRoom(setRoom)
+      const payload = {
+        roomId: setRoom.room_id,
+        userId: this.user.user_id
+      }
+      this.getMessageByRoomId(payload)
+      this.setSelect(true)
+      if (!this.prevRoom) {
+        this.socket.emit('joinRoom', setRoom.room_id)
+        this.prevRoom = setRoom.room_id
+      } else {
+        this.socket.emit('changeRoom', {
+          prevRoom: this.prevRoom,
+          newRoom: setRoom.room_id
+        })
+        this.prevRoom = setRoom.room_id
+      }
+    },
     onSearch() {
       if (this.keyword === '') {
         this.getRoomByUserId(this.user.user_id)
@@ -139,11 +201,13 @@ export default {
     ...mapGetters({
       user: 'getUserData',
       rooms: 'roomList',
-      chat: 'getMessage'
+      chat: 'getMessage',
+      groups: 'getGroups'
     })
   },
   created() {
     this.getRoomByUserId(this.user.user_id)
+    this.getAllGroups()
   },
   mounted() {
     this.socket.on('chatMessage', data => {

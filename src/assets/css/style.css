@@ -431,7 +431,7 @@
 
 .sender {
   border-radius: 35px 35px 35px 10px;
-  margin: 10px 0 10px 20px;
+  margin: 0 0 10px 20px;
   background: #7e98df;
   color: #ffffff;
 }
@@ -441,6 +441,13 @@
   margin: 10px 20px 10px 0;
   background: #ffffff;
   color: #232323;
+}
+
+.sender-name {
+  color: #2675ec;
+  font-size: 15px;
+  margin: 10px 0 0 20px;
+  padding: 0;
 }
 
 .time-sender,

@@ -2,7 +2,12 @@
   <b-container class="room">
     <div class="room-header">
       <b-row class="room-header-row">
-        <b-col cols="1" class="rooms-pict" align-self="center">
+        <b-col
+          cols="1"
+          class="rooms-pict"
+          align-self="center"
+          v-if="room.user_image"
+        >
           <b-img :src="url + '/' + room.user_image" class="rooms-pict" />
         </b-col>
         <b-col cols="10" align-self="center">
@@ -19,6 +24,7 @@
           align-self="center"
           v-b-toggle.sidebar-info
           @click="onDetail()"
+          v-if="room.user_image"
         >
           <b-img :src="require('../assets/icon/Profile menu.png')" />
         </b-col>
@@ -27,6 +33,13 @@
     <div id="chat-c">
       <b-container>
         <b-row v-for="(value, index) in chat" :key="index">
+          <b-col
+            cols="11"
+            v-if="!room.user_image && value.class === 'sender'"
+            class="sender-name"
+          >
+            {{ value.user_name }}
+          </b-col>
           <div :class="value.class" v-if="value.class === 'sender'">
             {{ value.message }}
           </div>
@@ -86,7 +99,12 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['sendMessage', 'getMessageByRoomId', 'getRoomByUserId']),
+    ...mapActions([
+      'sendMessage',
+      'getMessageByRoomId',
+      'getRoomByUserId',
+      'getAllGroups'
+    ]),
     ...mapMutations(['setContactInfo']),
     scrollToEnd() {
       const container = this.$el.querySelector('#chat-c')
@@ -107,6 +125,7 @@ export default {
         console.log(result.msg)
         this.scrollToEnd()
         this.getRoomByUserId(this.user.user_id)
+        this.getAllGroups()
       })
       const setData = {
         message: this.msg,
