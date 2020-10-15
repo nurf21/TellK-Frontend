@@ -4,7 +4,7 @@
     title="Contacts"
     shadow
     backdrop
-    width="454px"
+    width="500px"
     ref="sidebarContacts"
   >
     <b-container class="contact-c">

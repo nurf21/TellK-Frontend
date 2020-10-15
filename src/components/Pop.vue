@@ -30,6 +30,36 @@
         </b-col>
       </b-row>
     </b-popover>
+    <b-popover target="pop-burger-mobile" placement="bottomleft">
+      <b-row class="burger-menu" @click="clickMenu(1)" style="cursor: pointer;">
+        <b-col cols="1">
+          <img
+            src="@/assets/icon/Settings.png"
+            alt="settings"
+            style="padding-left: 8px"
+          />
+        </b-col>
+        <b-col cols="9"><p>Settings</p></b-col>
+      </b-row>
+      <b-row class="burger-menu" @click="clickMenu(2)" style="cursor: pointer;">
+        <b-col cols="1">
+          <img
+            src="@/assets/icon/Contacts.png"
+            alt="contact"
+            style="padding-left: 8px"
+          />
+        </b-col>
+        <b-col cols="9"><p>Contacts</p></b-col>
+      </b-row>
+      <b-row class="burger-menu">
+        <b-col cols="1">
+          <img src="@/assets/icon/Invite friends.png" alt="add-contact" />
+        </b-col>
+        <b-col cols="9" @click="clickMenu(3)" style="cursor: pointer;">
+          <p>Add Contact</p>
+        </b-col>
+      </b-row>
+    </b-popover>
     <b-modal id="bv-add" hide-footer centered>
       <template v-slot:modal-title>
         Add Contact

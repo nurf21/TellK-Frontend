@@ -397,6 +397,10 @@
   margin: 30px auto 0;
 }
 
+.room-detail {
+  padding: 0;
+}
+
 .room-name {
   font-size: 18px;
   line-height: 21px;
@@ -483,3 +487,40 @@
 .input-c button:focus {
   background: #5277db !important;
 }
+
+@media screen and (max-width: 500px) {
+  .empty-room,
+  .room,
+  .desktop {
+    display: none;
+  }
+
+  .mobile-chat {
+    z-index: 0;
+  }
+
+  .room-header {
+    height: 65px;
+    margin-bottom: 5px;
+  }
+
+  .room-header-row {
+    margin: 0;
+  }
+
+  .room-header-info {
+    margin-right: 20px;
+  }
+}
+
+@media screen and (min-width: 767px) {
+  .mobile {
+    display: none;
+  }
+}
+
+/* @media screen and (min-width: 767px) and (max-width: 1023px) {
+  .room-detail {
+    padding: 0 20px;
+  }
+} */

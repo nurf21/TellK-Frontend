@@ -1,97 +1,200 @@
 <template>
-  <b-container style="padding: 0">
-    <b-row class="list-header">
-      <b-col cols="10" align-self="center"><p>TellK</p></b-col>
-      <b-col cols="2" align-self="center">
-        <img src="@/assets/icon/Menu.png" id="pop-burger" alt="toggle-menu" />
-      </b-col>
-      <Pop />
-      <Side />
-      <Contact />
-      <Info />
-    </b-row>
-    <b-tabs content-class="mt-3" fill>
-      <b-tab title="Private" active>
-        <b-row class="list-options">
-          <b-col cols="10">
-            <b-form-input
-              type="search"
-              placeholder="Search name"
-              v-model="keyword"
-              v-on:keyup.enter="onSearch"
-            ></b-form-input>
-          </b-col>
-          <b-col cols="2" align-self="center">
-            <img
-              src="@/assets/icon/Plus.png"
-              alt="plus"
-              v-b-toggle.sidebar-contacts
-            />
-          </b-col>
-        </b-row>
-        <div class="rooms-c">
-          <b-row
-            class="list-rooms"
-            v-for="(value, index) in rooms"
-            :key="index"
-            @click="onSelect(value)"
-          >
-            <b-col cols="3">
-              <b-img
-                :src="url + '/' + value.user_image"
-                class="rooms-pict"
-              ></b-img>
+  <div>
+    <b-container style="padding: 0" class="desktop">
+      <b-row class="list-header">
+        <b-col cols="9" xl="10" align-self="center"><p>TellK</p></b-col>
+        <b-col cols="2" align-self="center">
+          <img src="@/assets/icon/Menu.png" id="pop-burger" alt="toggle-menu" />
+        </b-col>
+        <Pop />
+        <Side />
+        <Contact />
+        <Info />
+      </b-row>
+      <b-tabs content-class="mt-3" fill>
+        <b-tab title="Private" active>
+          <b-row class="list-options">
+            <b-col cols="9" lg="10">
+              <b-form-input
+                type="search"
+                placeholder="Search name"
+                v-model="keyword"
+                v-on:keyup.enter="onSearch"
+              ></b-form-input>
             </b-col>
-            <b-col cols="6" style="padding: 0">
-              <p class="rooms-name">{{ value.user_name }}</p>
-              <p class="read" v-if="value.recent.user_id === user.user_id">
-                Me: {{ value.recent.message.slice(0, 10) }}...
-              </p>
-              <p class="read" v-else>
-                {{ value.recent.message.slice(0, 10) }}...
-              </p>
-            </b-col>
-            <b-col cols="3" class="rooms-time">
-              <p>{{ value.recent.message_created_at.slice(0, 16) }}</p>
-              <b-badge v-if="value.unread > 0" class="counter">
-                {{ value.unread }}
-              </b-badge>
-              <b-img
-                :src="require('../assets/icon/Read-mark.png')"
-                v-if="value.class === 'sent and read'"
-              />
-              <b-img
-                :src="require('../assets/icon/Sent-mark.png')"
-                v-if="value.class === 'sent'"
+            <b-col cols="2" align-self="center">
+              <img
+                src="@/assets/icon/Plus.png"
+                alt="plus"
+                v-b-toggle.sidebar-contacts
               />
             </b-col>
           </b-row>
-        </div>
-      </b-tab>
+          <div class="rooms-c">
+            <b-row
+              class="list-rooms"
+              v-for="(value, index) in rooms"
+              :key="index"
+              @click="onSelect(value)"
+            >
+              <b-col cols="4" lg="3">
+                <b-img
+                  :src="url + '/' + value.user_image"
+                  class="rooms-pict"
+                ></b-img>
+              </b-col>
+              <b-col cols="5" lg="6" class="room-detail">
+                <p class="rooms-name">{{ value.user_name }}</p>
+                <p class="read" v-if="value.recent.user_id === user.user_id">
+                  Me: {{ value.recent.message.slice(0, 10) }}...
+                </p>
+                <p class="read" v-else>
+                  {{ value.recent.message.slice(0, 10) }}...
+                </p>
+              </b-col>
+              <b-col cols="3" class="rooms-time">
+                <p>{{ value.recent.message_created_at.slice(0, 16) }}</p>
+                <b-badge v-if="value.unread > 0" class="counter">
+                  {{ value.unread }}
+                </b-badge>
+                <b-img
+                  :src="require('../assets/icon/Read-mark.png')"
+                  v-if="value.class === 'sent and read'"
+                />
+                <b-img
+                  :src="require('../assets/icon/Sent-mark.png')"
+                  v-if="value.class === 'sent'"
+                />
+              </b-col>
+            </b-row>
+          </div>
+        </b-tab>
 
-      <b-tab title="Group">
-        <div class="rooms-c">
-          <b-row
-            class="list-rooms"
-            v-for="(value, index) in groups"
-            :key="index"
-            @click="onSelectGroup(value)"
-          >
-            <b-col cols="9">
-              <p class="rooms-name">{{ value.group_name }}</p>
-              <p class="read">
-                {{ value.recent.user_name }}:
-                {{ value.recent.message.slice(0, 10) }}...
-              </p>
+        <b-tab title="Group">
+          <div class="rooms-c">
+            <b-row
+              class="list-rooms"
+              v-for="(value, index) in groups"
+              :key="index"
+              @click="onSelectGroup(value)"
+            >
+              <b-col cols="9">
+                <p class="rooms-name">{{ value.group_name }}</p>
+                <p class="read">
+                  {{ value.recent.user_name }}:
+                  {{ value.recent.message.slice(0, 10) }}...
+                </p>
+              </b-col>
+              <b-col cols="3" class="rooms-time">
+                <p>{{ value.recent.message_created_at.slice(0, 16) }}</p>
+              </b-col>
+            </b-row>
+          </div>
+        </b-tab>
+      </b-tabs>
+    </b-container>
+
+    <b-container style="padding: 0" class="mobile">
+      <b-row class="list-header">
+        <b-col cols="10" align-self="center"><p>TellK</p></b-col>
+        <b-col cols="2" align-self="center">
+          <img
+            src="@/assets/icon/Menu.png"
+            id="pop-burger-mobile"
+            alt="toggle-menu"
+            style="cursor: pointer"
+          />
+        </b-col>
+        <Side />
+        <Contact />
+        <Info />
+      </b-row>
+      <b-tabs content-class="mt-3" fill>
+        <b-tab title="Private" active>
+          <b-row class="list-options">
+            <b-col cols="10">
+              <b-form-input
+                type="search"
+                placeholder="Search name"
+                v-model="keyword"
+                v-on:keyup.enter="onSearch"
+              ></b-form-input>
             </b-col>
-            <b-col cols="3" class="rooms-time">
-              <p>{{ value.recent.message_created_at.slice(0, 16) }}</p>
+            <b-col cols="2" align-self="center">
+              <img
+                src="@/assets/icon/Plus.png"
+                alt="plus"
+                v-b-toggle.sidebar-contacts
+              />
             </b-col>
           </b-row>
-        </div>
-      </b-tab>
-    </b-tabs>
-  </b-container>
+          <div class="rooms-c">
+            <b-row
+              class="list-rooms"
+              v-for="(value, index) in rooms"
+              :key="index"
+              v-b-toggle.sidebar-mobile
+              @click="onSelect(value)"
+            >
+              <b-col cols="3">
+                <b-img
+                  :src="url + '/' + value.user_image"
+                  class="rooms-pict"
+                ></b-img>
+              </b-col>
+              <b-col cols="6" style="padding: 0">
+                <p class="rooms-name">{{ value.user_name }}</p>
+                <p class="read" v-if="value.recent.user_id === user.user_id">
+                  Me: {{ value.recent.message.slice(0, 10) }}...
+                </p>
+                <p class="read" v-else>
+                  {{ value.recent.message.slice(0, 10) }}...
+                </p>
+              </b-col>
+              <b-col cols="3" class="rooms-time">
+                <p>{{ value.recent.message_created_at.slice(0, 16) }}</p>
+                <b-badge v-if="value.unread > 0" class="counter">
+                  {{ value.unread }}
+                </b-badge>
+                <b-img
+                  :src="require('../assets/icon/Read-mark.png')"
+                  v-if="value.class === 'sent and read'"
+                />
+                <b-img
+                  :src="require('../assets/icon/Sent-mark.png')"
+                  v-if="value.class === 'sent'"
+                />
+              </b-col>
+            </b-row>
+          </div>
+        </b-tab>
+
+        <b-tab title="Group">
+          <div class="rooms-c">
+            <b-row
+              class="list-rooms"
+              v-for="(value, index) in groups"
+              :key="index"
+              v-b-toggle.sidebar-mobile
+              @click="onSelectGroup(value)"
+            >
+              <b-col cols="9">
+                <p class="rooms-name">{{ value.group_name }}</p>
+                <p class="read">
+                  {{ value.recent.user_name }}:
+                  {{ value.recent.message.slice(0, 10) }}...
+                </p>
+              </b-col>
+              <b-col cols="3" class="rooms-time">
+                <p>{{ value.recent.message_created_at.slice(0, 16) }}</p>
+              </b-col>
+            </b-row>
+          </div>
+        </b-tab>
+      </b-tabs>
+    </b-container>
+    <Mobile />
+  </div>
 </template>
 
 <script>
@@ -99,6 +202,7 @@ import Pop from '../components/Pop'
 import Side from '../components/Side'
 import Contact from '../components/Contact'
 import Info from '../components/Info'
+import Mobile from '../components/Mobile'
 import { mapActions, mapGetters, mapMutations } from 'vuex'
 import io from 'socket.io-client'
 
@@ -108,7 +212,8 @@ export default {
     Pop,
     Side,
     Contact,
-    Info
+    Info,
+    Mobile
   },
   data() {
     return {

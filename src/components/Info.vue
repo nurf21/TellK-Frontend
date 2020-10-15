@@ -1,5 +1,5 @@
 <template>
-  <b-sidebar id="sidebar-info" right shadow>
+  <b-sidebar id="sidebar-info" right shadow width="500px">
     <b-container>
       <div class="side-profile-header">
         <b-img :src="url + '/' + info.user_image"></b-img>

@@ -1,17 +1,22 @@
 <template>
-  <b-container class="room">
+  <b-sidebar
+    id="sidebar-mobile"
+    shadow
+    backdrop
+    width="500px"
+    class="mobile-chat"
+  >
     <div class="room-header">
       <b-row class="room-header-row">
         <b-col
-          cols="2"
-          xl="1"
+          cols="3"
           class="rooms-pict"
           align-self="center"
           v-if="room.user_image"
         >
           <b-img :src="url + '/' + room.user_image" class="rooms-pict" />
         </b-col>
-        <b-col cols="8" xl="10" align-self="center">
+        <b-col cols="6" align-self="center" class="room-header-info">
           <p class="room-name">{{ room.user_name }}</p>
           <p class="room-status mt-2" v-if="room.user_activity === 0">
             Offline
@@ -68,7 +73,7 @@
     </div>
     <b-container class="input-c">
       <b-row>
-        <b-col cols="10" xl="11">
+        <b-col cols="10">
           <b-form-input
             placeholder="Type your message..."
             v-on:keyup.enter="onSend"
@@ -82,7 +87,7 @@
         </b-col>
       </b-row>
     </b-container>
-  </b-container>
+  </b-sidebar>
 </template>
 
 <script>

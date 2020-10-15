@@ -1,9 +1,13 @@
 <template>
   <b-container fluid>
     <b-row>
-      <b-col cols="4" class="home-left"><List /></b-col>
-      <b-col cols="8" style="padding: 0;" v-if="!isSelected"><Empty /></b-col>
-      <b-col cols="8" style="padding: 0;" v-if="isSelected"><Room /></b-col>
+      <b-col cols="12" md="4" class="home-left"><List /></b-col>
+      <b-col cols="8" style="padding: 0;" v-if="!isSelected" class="desktop"
+        ><Empty
+      /></b-col>
+      <b-col cols="8" style="padding: 0;" v-if="isSelected" class="desktop"
+        ><Room
+      /></b-col>
     </b-row>
   </b-container>
 </template>

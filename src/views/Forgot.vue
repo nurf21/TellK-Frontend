@@ -7,7 +7,7 @@
             <h1>&lt;</h1>
           </router-link>
         </b-col>
-        <b-col cols="11" style="padding-right: 50px">
+        <b-col cols="10" style="padding-right: 50px">
           <h1>Forgot Password</h1>
         </b-col>
       </b-row>

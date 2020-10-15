@@ -7,7 +7,7 @@
             <h1>&lt;</h1>
           </router-link>
         </b-col>
-        <b-col cols="11" style="padding-right: 50px"><h1>Register</h1></b-col>
+        <b-col cols="10" style="padding-right: 50px"><h1>Register</h1></b-col>
       </b-row>
       <p class="welcome" v-if="!isSuccess">Let’s create your account!</p>
       <p class="sign-up" v-if="isSuccess">
