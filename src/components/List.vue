@@ -45,26 +45,25 @@
               </b-col>
               <b-col cols="5" lg="6" class="room-detail">
                 <p class="rooms-name">{{ value.user_name }}</p>
-                <p class="read" v-if="value.recent.user_id === user.user_id">
+                <p
+                  class="read"
+                  v-if="value.recent && value.recent.user_id === user.user_id"
+                >
                   Me: {{ value.recent.message.slice(0, 10) }}...
                 </p>
-                <p class="read" v-else>
+                <p
+                  class="read"
+                  v-else-if="
+                    value.recent && value.recent.user_id !== user.user_id
+                  "
+                >
                   {{ value.recent.message.slice(0, 10) }}...
                 </p>
               </b-col>
               <b-col cols="3" class="rooms-time">
-                <p>{{ value.recent.message_created_at.slice(0, 16) }}</p>
-                <b-badge v-if="value.unread > 0" class="counter">
-                  {{ value.unread }}
-                </b-badge>
-                <b-img
-                  :src="require('../assets/icon/Read-mark.png')"
-                  v-if="value.class === 'sent and read'"
-                />
-                <b-img
-                  :src="require('../assets/icon/Sent-mark.png')"
-                  v-if="value.class === 'sent'"
-                />
+                <p v-if="value.recent">
+                  {{ value.recent.message_created_at.slice(0, 16) }}
+                </p>
               </b-col>
             </b-row>
           </div>
@@ -86,7 +85,9 @@
                 </p>
               </b-col>
               <b-col cols="3" class="rooms-time">
-                <p>{{ value.recent.message_created_at.slice(0, 16) }}</p>
+                <p v-if="value.recent">
+                  {{ value.recent.message_created_at.slice(0, 16) }}
+                </p>
               </b-col>
             </b-row>
           </div>
@@ -144,26 +145,25 @@
               </b-col>
               <b-col cols="6" style="padding: 0">
                 <p class="rooms-name">{{ value.user_name }}</p>
-                <p class="read" v-if="value.recent.user_id === user.user_id">
+                <p
+                  class="read"
+                  v-if="value.recent && value.recent.user_id === user.user_id"
+                >
                   Me: {{ value.recent.message.slice(0, 10) }}...
                 </p>
-                <p class="read" v-else>
+                <p
+                  class="read"
+                  v-else-if="
+                    value.recent && value.recent.user_id !== user.user_id
+                  "
+                >
                   {{ value.recent.message.slice(0, 10) }}...
                 </p>
               </b-col>
               <b-col cols="3" class="rooms-time">
-                <p>{{ value.recent.message_created_at.slice(0, 16) }}</p>
-                <b-badge v-if="value.unread > 0" class="counter">
-                  {{ value.unread }}
-                </b-badge>
-                <b-img
-                  :src="require('../assets/icon/Read-mark.png')"
-                  v-if="value.class === 'sent and read'"
-                />
-                <b-img
-                  :src="require('../assets/icon/Sent-mark.png')"
-                  v-if="value.class === 'sent'"
-                />
+                <p v-if="value.recent">
+                  {{ value.recent.message_created_at.slice(0, 16) }}
+                </p>
               </b-col>
             </b-row>
           </div>
@@ -186,7 +186,9 @@
                 </p>
               </b-col>
               <b-col cols="3" class="rooms-time">
-                <p>{{ value.recent.message_created_at.slice(0, 16) }}</p>
+                <p v-if="value.recent">
+                  {{ value.recent.message_created_at.slice(0, 16) }}
+                </p>
               </b-col>
             </b-row>
           </div>
